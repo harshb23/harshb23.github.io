@@ -41,7 +41,7 @@
         <div class="navbar-actions">
           <select name="language" id="lang">
             <option value="en">En</option>
-            <option value="ar">Ar</option>
+            <!-- <option value="ar">Ar</option> -->
           </select>
 
           <button
@@ -548,7 +548,10 @@
             </li>
 
             <li>
-              <a href="#" class="project-card">
+              <a
+                href="https://github.com/harshb23/WeatherAPI-Storyboard"
+                class="project-card"
+              >
                 <figure class="card-banner">
                   <img
                     src="./assets/images/weather_app.png"
@@ -591,7 +594,10 @@
             </li>
 
             <li>
-              <a href="#" class="project-card">
+              <a
+                href="https://github.com/harshb23/HangmanGame"
+                class="project-card"
+              >
                 <figure class="card-banner">
                   <img
                     src="./assets/images/Hangman.png"
@@ -611,7 +617,10 @@
             </li>
 
             <li>
-              <a href="#" class="project-card">
+              <a
+                href="https://github.com/harshb23/Coffee-Recipe-Sharing"
+                class="project-card"
+              >
                 <figure class="card-banner">
                   <img
                     src="./assets/images/coffee.png"
@@ -654,7 +663,10 @@
             </li>
 
             <li>
-              <a href="#" class="project-card">
+              <a
+                href="https://github.com/harshb23/BleScan"
+                class="project-card"
+              >
                 <figure class="card-banner">
                   <img
                     src="./assets/images/ble_scan.png"
@@ -783,6 +795,7 @@
             action="https://formspree.io/f/moqoeodj"
             method="POST"
             class="contact-form"
+            onsubmit="clearAndSubmitForm(event)"
           >
             <div class="form-wrapper">
               <label for="name" class="form-label">Name</label>
@@ -828,6 +841,8 @@
                   id="phone"
                   required
                   placeholder="Phone Number"
+                  pattern="[0-9]{10}"
+                  title="Please enter a 10-digit phone number"
                   class="input-field"
                 />
 
@@ -897,5 +912,52 @@
       nomodule
       src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
     ></script>
+    <script>
+      function clearAndSubmitForm(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Get the form data
+        const formData = new FormData(event.target);
+
+        // Clear the input fields
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("message").value = "";
+
+        // Create a new FormData object
+        const newFormData = new FormData();
+
+        // Transfer non-empty form data to the new form
+        for (const pair of formData) {
+          if (pair[1] !== "") {
+            newFormData.append(pair[0], pair[1]);
+          }
+        }
+
+        // Create a new XMLHttpRequest to submit the new form data
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "https://formspree.io/f/moqoeodj", true);
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+
+        // Send the new form data as a URL-encoded string
+        xhr.send(new URLSearchParams(newFormData));
+
+        // Optionally, you can handle the response from Formspree if needed
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            // Successful submission, handle accordingly
+            alert("Form submitted successfully!");
+          } else {
+            // Submission failed, handle accordingly
+            alert("Form submission failed. Please try again.");
+          }
+        };
+      }
+    </script>
   </body>
 </html>
